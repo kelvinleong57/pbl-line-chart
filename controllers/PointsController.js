@@ -4,8 +4,8 @@ app_graph.controller('PointsController', function($scope, $http) {
     var max_points = 0;
     
     // for coordinating asynchronous functions
-//    var events_lock = false;
-//    var points_lock = false;
+    var events_lock = false;
+    var points_lock = false;
     
 	getAllEvents = function(){
 	 	$http.get(tokenizedURL(ROOT_URL + '/api/events')).
@@ -26,11 +26,9 @@ app_graph.controller('PointsController', function($scope, $http) {
             
                 // events are newest first, so reverse it
                 $scope.events.reverse();
-        
-//                events_lock = true;
-//                generateGraph();
-            
-                getUserPointsAndAttendance("kelvin.leong@berkeley.edu");
+                
+                events_lock = true;
+                generateGraph();
 	    	}).
 	    	error(function(data, status, headers, config){
 	    		console.log('there was an error');
@@ -43,7 +41,7 @@ app_graph.controller('PointsController', function($scope, $http) {
 	    	success(function(data, status, headers, config){
 	    		$scope.user_points_attend = data;
             
-//                points_lock = true;
+                points_lock = true;
                 generateGraph();
 	    	}).
 	    	error(function(data, status, headers, config){
@@ -57,21 +55,13 @@ app_graph.controller('PointsController', function($scope, $http) {
     
     generateGraph = function() {
         
-//        console.log(events_lock);
-//        console.log(points_lock);
-//        
-//        // if neither asynchronous function has ended, then don't run this
-//        if (!events_lock && !points_lock) {
-//            return;
-//        } else {
-//            events_lock = false;
-//            points_lock = false;
-//        }
-        
-        if ($scope.events && $scope.user_points_attend) {
-            console.log("both values are defined");
-        } else {
+        // if neither asynchronous function has ended, then don't run this
+        if (!events_lock || !points_lock) {
             return;
+        } else {
+            // reset the locks
+            events_lock = false;
+            points_lock = false;
         }
     
         $scope.data = [];
@@ -138,5 +128,7 @@ app_graph.controller('PointsController', function($scope, $http) {
         }
     }
     
+    // function calls from here
     getAllEvents();
+    getUserPointsAndAttendance("kelvin.leong@berkeley.edu");
 });
