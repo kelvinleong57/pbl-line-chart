@@ -1,23 +1,7 @@
 ROOT_URL = 'http://testing.berkeley-pbl.com';
 var token = '6b656c76696e2e6c656f6e67406265726b656c65792e656475';
 
-var app = angular.module('myApp', ['ngRoute']);
 var app_graph = angular.module('myAppGraph', ['n3-line-chart']);
-
-//app.controller('HomeController', function($scope, $http) {
-//	$scope.test = 'test';
-//	getPosts = function(){
-//	 	$http.get(tokenizedURL(ROOT_URL + '/api/current_members')).
-//	    	success(function(data, status, headers, config){
-//	    		$scope.members = data;
-//	    	}).
-//	    	error(function(data, status, headers, config){
-//	    		console.log('there was an error');
-//	    		console.log(data);
-//    	});
-//	}	
-//	getPosts();
-//});
 
 function tokenizedURL(url){
     if(url.indexOf('?') != -1){
