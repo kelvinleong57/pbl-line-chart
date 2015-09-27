@@ -28,7 +28,7 @@ app_graph.controller('PointsController', function($scope, $http) {
                 $scope.events.reverse();
                 
                 events_lock = true;
-                generateGraph();
+                generateLineChart();
 	    	}).
 	    	error(function(data, status, headers, config){
 	    		console.log('there was an error');
@@ -42,7 +42,7 @@ app_graph.controller('PointsController', function($scope, $http) {
 	    		$scope.user_points_attend = data;
             
                 points_lock = true;
-                generateGraph();
+                generateLineChart();
 	    	}).
 	    	error(function(data, status, headers, config){
 	    		console.log('there was an error');
@@ -53,7 +53,7 @@ app_graph.controller('PointsController', function($scope, $http) {
     
     // SCOPE DATA
     
-    generateGraph = function() {
+    generateLineChart = function() {
         
         // if neither asynchronous function has ended, then don't run this
         if (!events_lock || !points_lock) {
