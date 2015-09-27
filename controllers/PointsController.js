@@ -128,7 +128,35 @@ app_graph.controller('PointsController', function($scope, $http) {
         }
     }
     
+    
+    generateTop10Points = function() {
+        $http.get(tokenizedURL(ROOT_URL + '/api/points')).
+	    	success(function(data, status, headers, config){
+	    		$scope.email_points = data;
+            
+                $scope.email_points = $scope.email_points.sort(function (a, b) {
+                    // most points first
+                    if (a.points > b.points) {
+                        return -1;
+                    }
+                    if (a.points < b.points) {
+                        return 1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                });
+            
+	    	}).
+	    	error(function(data, status, headers, config){
+	    		console.log('there was an error');
+	    		console.log(data);
+    	});
+    }
+    
+    
     // function calls from here
     getAllEvents();
     getUserPointsAndAttendance("kelvin.leong@berkeley.edu");
+    
+    generateTop10Points();
 });
